@@ -71,19 +71,33 @@ namespace SamplePlayer
             //To get Windows.Media.Playlists
             //https://blogs.windows.com/buildingapps/2015/09/15/dynamically-detecting-features-with-api-contracts-10-by-10/
             MediaPlaybackList mpl = new MediaPlaybackList();
+            List<string> songnames = new List<string>();
 
             foreach (StorageFile file in files)
             {
                 MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
                 mpl.Items.Add(Item);
+                songnames.Add(file.Path);
+
             }
 
+            //mpl.StartingItem = mpl.Items[2];
             meMyPlayer.Source = mpl;
+
+            lvPlayList.ItemsSource = songnames;
+
             meMyPlayer.MediaPlayer.Play();
+
+            
 
         }
 
-       
+        private void LvPlayList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MediaPlaybackList mpl2 = (MediaPlaybackList)meMyPlayer.Source;
+            if( lvPlayList.SelectedIndex >= 0)
+                mpl2.MoveTo((uint)lvPlayList.SelectedIndex);
+        }
     }
 
 }
