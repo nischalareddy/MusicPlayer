@@ -20,12 +20,13 @@
 
 
     <Grid>
-        <MediaElement Name ="meMyPlayer" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" AreTransportControlsEnabled="True">
-            <MediaElement.TransportControls>
+        
+            <MediaPlayerElement Name ="meMyPlayer" AutoPlay="True" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" AreTransportControlsEnabled="True">
+            <MediaPlayerElement.TransportControls>
                 <MediaTransportControls IsZoomButtonVisible="True" IsZoomEnabled="True" IsStopButtonVisible="True" IsStopEnabled="True"
                                 IsPlaybackRateButtonVisible="True" IsPlaybackRateEnabled="True"/>
-            </MediaElement.TransportControls>
-        </MediaElement>
+            </MediaPlayerElement.TransportControls>
+        </MediaPlayerElement>
 
         <!--<CommandBar Height="61" VerticalAlignment="Top" Margin="0,707,0,0">
             <CommandBar.Content>
@@ -35,7 +36,7 @@
             <AppBarButton Icon="Cancel" Label="AppBarButton"/>
         </CommandBar>-->
         <Button Content="PlaySong" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Height="48" Click="Button_Click"/>
-        <!--<Button Name ="bPause" Content="Pause" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-4.415,-5.051" Width="120" Height="49" Click="Pause" Margin="0,93,0,0"/>-->
+        <Button Name ="bPlayList" Content="PlayList" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-4.415,-5.051" Width="120" Height="49" Click="PlayList_Click" Margin="0,93,0,0"/>
     </Grid>
 </Page>
 

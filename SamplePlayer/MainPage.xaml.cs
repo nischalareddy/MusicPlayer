@@ -6,6 +6,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media.Core;
 using Windows.Media.Playback;
+using Windows.Media.Playlists;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
@@ -36,7 +37,6 @@ namespace SamplePlayer
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             FileOpenPicker picker = new FileOpenPicker();
-
             picker.ViewMode = PickerViewMode.Thumbnail;
             picker.SuggestedStartLocation = PickerLocationId.Desktop;
             picker.FileTypeFilter.Add(".mp3");
@@ -44,11 +44,46 @@ namespace SamplePlayer
 
             StorageFile file = await picker.PickSingleFileAsync();
 
-            //meMyPlayer.Source = new Uri(file.Path, UriKind.Absolute);
-            meMyPlayer.SetSource(await file.OpenReadAsync(), file.ContentType);
-            meMyPlayer.SetSource()
+            //meMyPlayer.Source = MediaSource.CreateFromStorageFile(file);
+
+            //meMyPlayer.SetSource(await file.OpenReadAsync(), file.ContentType);
+            //meMyPlayer.Source = MediaSource.CreateFromStorageFile(file);
+            MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
+            MediaPlaybackList mpl = new MediaPlaybackList();
+            mpl.Items.Add(Item);
+            meMyPlayer.Source = mpl;
+            meMyPlayer.MediaPlayer.Play();
+            
         }
 
+        private async void PlayList_Click(object sender, RoutedEventArgs e)
+        {
+            FileOpenPicker picker = new FileOpenPicker();
+
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.Desktop;
+            picker.FileTypeFilter.Add(".mp3");
+            picker.FileTypeFilter.Add(".wav");
+
+            IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync(); //selected files to add to playlist
+
+            // https://github.com/Microsoft/Windows-universal-samples/blob/master/Samples/Playlists/cs/Scenario1_Create.xaml.cs
+            //To get Windows.Media.Playlists
+            //https://blogs.windows.com/buildingapps/2015/09/15/dynamically-detecting-features-with-api-contracts-10-by-10/
+            MediaPlaybackList mpl = new MediaPlaybackList();
+
+            foreach (StorageFile file in files)
+            {
+                MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
+                mpl.Items.Add(Item);
+            }
+
+            meMyPlayer.Source = mpl;
+            meMyPlayer.MediaPlayer.Play();
+
+        }
+
+       
     }
 
 }
