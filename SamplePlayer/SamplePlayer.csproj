@@ -131,6 +131,8 @@
     <None Include="SamplePlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\BackGround.jpg" />
+    <Content Include="Assets\PlayListIcon.png" />
     <Content Include="Assets\SearchImage.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />

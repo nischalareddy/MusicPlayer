@@ -20,31 +20,29 @@
 
 
     <Grid>
-
+        <Grid.Background>
+            <ImageBrush Stretch="Fill" ImageSource="Assets/BackGround.jpg"/>
+        </Grid.Background>
         <MediaPlayerElement Name ="meMyPlayer" AutoPlay="True" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Stretch" Width="auto" AreTransportControlsEnabled="True">
             <MediaPlayerElement.TransportControls>
-                <MediaTransportControls IsZoomButtonVisible="True" IsZoomEnabled="True" IsStopButtonVisible="True" IsStopEnabled="True"
+                <MediaTransportControls IsStopButtonVisible="True" IsStopEnabled="True"
                                 IsPlaybackRateButtonVisible="True" IsPlaybackRateEnabled="True"/>
             </MediaPlayerElement.TransportControls>
         </MediaPlayerElement>
-        <!--<CommandBar Height="61" VerticalAlignment="Top" Margin="0,707,0,0">
-            <CommandBar.Content>
-                <Grid/>
-            </CommandBar.Content>
-            <AppBarButton Icon="Accept" Label="AppBarButton"/>
-            <AppBarButton Icon="Cancel" Label="AppBarButton"/>
-        </CommandBar>-->
         <StackPanel>
-        <Button  HorizontalAlignment="Left" VerticalAlignment="Top" 
-                Width="130" Height="48" Click="Button_Click">
-            <StackPanel>
-                <Image Source="Assets/SearchImage.png" Stretch="Fill"/>
-                <TextBlock Text="Play" />
-            </StackPanel>
-        </Button>
-        <Button Name ="bPlayList" Content="PlayList" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-4.415,-5.051" Width="120" Height="49" Click="PlayList_Click" Margin="0,93,0,0"/>
-        <ListView x:Name="lvPlayList" ItemClick="LvPlayList_ItemClick" IsItemClickEnabled="True" BorderBrush="Black" BorderThickness="2">
-        </ListView>
+            <HyperlinkButton  Name ="bPlayList"  HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Width="256" Height="256" Click="PlayList_Click" >
+                <StackPanel>
+                    <Image Source="Assets/PlayListIcon.png" Stretch="Fill"/>
+                    <TextBlock Text="Play" />
+                </StackPanel>
+                
+                <HyperlinkButton.Background>
+                    <SolidColorBrush Opacity="0"/>
+                </HyperlinkButton.Background>
+            </HyperlinkButton>
+            <ListView x:Name="lvPlayList" ItemClick="LvPlayList_ItemClick" IsItemClickEnabled="True" BorderBrush="Black" BorderThickness="2">
+            </ListView>
         </StackPanel>
     </Grid>
 </Page>

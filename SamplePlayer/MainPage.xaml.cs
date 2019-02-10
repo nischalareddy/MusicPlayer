@@ -48,6 +48,8 @@ namespace SamplePlayer
 
             //meMyPlayer.SetSource(await file.OpenReadAsync(), file.ContentType);
             //meMyPlayer.Source = MediaSource.CreateFromStorageFile(file);
+
+
             MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
             MediaPlaybackList mpl = new MediaPlaybackList();
             mpl.Items.Add(Item);
@@ -58,33 +60,36 @@ namespace SamplePlayer
 
         private async void PlayList_Click(object sender, RoutedEventArgs e)
         {
-            FileOpenPicker picker = new FileOpenPicker();
+            FileOpenPicker picker = new FileOpenPicker();                   // FileOpenPicker helps to select the songs from fileExplorer
 
             picker.ViewMode = PickerViewMode.Thumbnail;
             picker.SuggestedStartLocation = PickerLocationId.Desktop;
-            picker.FileTypeFilter.Add(".mp3");
+            picker.FileTypeFilter.Add(".mp3");                              //filters only the mentioned file formats
             picker.FileTypeFilter.Add(".wav");
 
-            IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync(); //selected files to add to playlist
+            IReadOnlyList<StorageFile> files = await picker.PickMultipleFilesAsync(); //selected multiple files to add to playlist
 
             // https://github.com/Microsoft/Windows-universal-samples/blob/master/Samples/Playlists/cs/Scenario1_Create.xaml.cs
             //To get Windows.Media.Playlists
             //https://blogs.windows.com/buildingapps/2015/09/15/dynamically-detecting-features-with-api-contracts-10-by-10/
+
+
             MediaPlaybackList mpl = new MediaPlaybackList();
-            List<string> songnames = new List<string>();
+            List<string> songnames = new List<string>();    
 
             foreach (StorageFile file in files)
             {
                 MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
-                mpl.Items.Add(Item);
-                songnames.Add(file.Path);
+                mpl.Items.Add(Item);                                        //adding each file(song) to MediaPlayback List
+                songnames.Add(file.Path);                                   //songnames is a list which holds strings hence adding each filepath
 
             }
 
             //mpl.StartingItem = mpl.Items[2];
-            meMyPlayer.Source = mpl;
+            meMyPlayer.Source = mpl;                                        // meMyPlayer.Source is a superclass(IMediaPlaybackSource) property 
+                                                                            // which is holding a subclass(MediaPlaybackItem) object mpl
 
-            lvPlayList.ItemsSource = songnames;
+            lvPlayList.ItemsSource = songnames;                             // displays the songnames on the ListView
 
             meMyPlayer.MediaPlayer.Play();
 
@@ -94,8 +99,12 @@ namespace SamplePlayer
 
         private void LvPlayList_ItemClick(object sender, ItemClickEventArgs e)
         {
-            MediaPlaybackList mpl2 = (MediaPlaybackList)meMyPlayer.Source;
-            if( lvPlayList.SelectedIndex >= 0)
+            MediaPlaybackList mpl2 = (MediaPlaybackList)meMyPlayer.Source; 
+                                                                           //Assigning superclass refernce to a subclass refernce mpl2 , 
+                                                                           //here we can cast meMyPlayer.souce to a subclass(MediaPlaybackList) since 
+                                                                           // we know that the superclass refernce previous held the same subclass object
+                                                                          
+            if ( lvPlayList.SelectedIndex >= 0)
                 mpl2.MoveTo((uint)lvPlayList.SelectedIndex);
         }
     }
