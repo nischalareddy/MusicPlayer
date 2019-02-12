@@ -1,4 +1,4 @@
 
 Sample Media Player
 
-![Extendable Desktop Search](https://github.com/vineelkovvuri/Projects/raw/master/ExtendableDesktopSearch/Extendable-Desktop-Search.png)
+![Sample Media Player](https://github.com/nischalareddy/MyPlayer/blob/master/SamplePlayer.png)
