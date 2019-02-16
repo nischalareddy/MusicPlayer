@@ -28,37 +28,38 @@ namespace SamplePlayer
     public sealed partial class MainPage : Page
     {
 
+
         public MainPage()
         {
             this.InitializeComponent();
 
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            FileOpenPicker picker = new FileOpenPicker();
-            picker.ViewMode = PickerViewMode.Thumbnail;
-            picker.SuggestedStartLocation = PickerLocationId.Desktop;
-            picker.FileTypeFilter.Add(".mp3");
-            picker.FileTypeFilter.Add(".wav");
+        //private async void Button_Click(object sender, RoutedEventArgs e)
+        //{
+        //    FileOpenPicker picker = new FileOpenPicker();
+        //    picker.ViewMode = PickerViewMode.Thumbnail;
+        //    picker.SuggestedStartLocation = PickerLocationId.Desktop;
+        //    picker.FileTypeFilter.Add(".mp3");
+        //    picker.FileTypeFilter.Add(".wav");
 
-            StorageFile file = await picker.PickSingleFileAsync();
+        //    StorageFile file = await picker.PickSingleFileAsync();
 
-            //meMyPlayer.Source = MediaSource.CreateFromStorageFile(file);
+        //    //meMyPlayer.Source = MediaSource.CreateFromStorageFile(file);
 
-            //meMyPlayer.SetSource(await file.OpenReadAsync(), file.ContentType);
-            //meMyPlayer.Source = MediaSource.CreateFromStorageFile(file);
+        //    //meMyPlayer.SetSource(await file.OpenReadAsync(), file.ContentType);
+        //    //meMyPlayer.Source = MediaSource.CreateFromStorageFile(file);
 
 
-            MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
-            MediaPlaybackList mpl = new MediaPlaybackList();
-            mpl.Items.Add(Item);
-            meMyPlayer.Source = mpl;
-            meMyPlayer.MediaPlayer.Play();
+        //    MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
+        //    MediaPlaybackList mpl = new MediaPlaybackList();
+        //    mpl.Items.Add(Item);
+        //    meMyPlayer.Source = mpl;
+        //    meMyPlayer.MediaPlayer.Play();
             
-        }
+        //}
 
-        private async void PlayList_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             FileOpenPicker picker = new FileOpenPicker();                   // FileOpenPicker helps to select the songs from fileExplorer
 
@@ -75,19 +76,20 @@ namespace SamplePlayer
 
 
             MediaPlaybackList mpl = new MediaPlaybackList();
-            List<string> songnames = new List<string>();    
+            List<string> songnames = new List<string>();                    //To display the songs on the GUI
 
             foreach (StorageFile file in files)
             {
                 MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
-                mpl.Items.Add(Item);                                        //adding each file(song) to MediaPlayback List
+                mpl.Items.Add(Item);                                        //adding each song/Item to MediaPlayback List(Items)
+                                                                            //mpl.Items returns a list to which we are adding the MediaPlaybackItem
                 songnames.Add(file.Path);                                   //songnames is a list which holds strings hence adding each filepath
 
             }
 
             //mpl.StartingItem = mpl.Items[2];
             meMyPlayer.Source = mpl;                                        // meMyPlayer.Source is a superclass(IMediaPlaybackSource) property 
-                                                                            // which is holding a subclass(MediaPlaybackItem) object mpl
+                                                                            // which is holding a subclass(MediaPlaybackList Item) object mpl
 
             lvPlayList.ItemsSource = songnames;                             // displays the songnames on the ListView
 
@@ -100,13 +102,14 @@ namespace SamplePlayer
         private void LvPlayList_ItemClick(object sender, ItemClickEventArgs e)
         {
             MediaPlaybackList mpl2 = (MediaPlaybackList)meMyPlayer.Source; 
-                                                                           //Assigning superclass refernce to a subclass refernce mpl2 , 
+                                                                           //Assigning superclass object to a subclass refernce mpl2 , 
                                                                            //here we can cast meMyPlayer.souce to a subclass(MediaPlaybackList) since 
                                                                            // we know that the superclass refernce previous held the same subclass object
-                                                                          
+            
             if ( lvPlayList.SelectedIndex >= 0)
                 mpl2.MoveTo((uint)lvPlayList.SelectedIndex);
         }
+
     }
 
 }

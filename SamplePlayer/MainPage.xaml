@@ -31,7 +31,7 @@
         </MediaPlayerElement>
         <StackPanel>
             <HyperlinkButton  Name ="bPlayList"  HorizontalAlignment="Left" VerticalAlignment="Top" 
-                Width="256" Height="256" Click="PlayList_Click" >
+                Width="256" Height="256" Click="Button_Click" >
                 <StackPanel>
                     <Image Source="Assets/PlayListIcon.png" Stretch="Fill"/>
                     <TextBlock Text="Play" />
