@@ -122,6 +122,7 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Songs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +134,7 @@
   <ItemGroup>
     <Content Include="Assets\BackGround.jpg" />
     <Content Include="Assets\PlayListIcon.png" />
+    <Content Include="Assets\PlaySong.png" />
     <Content Include="Assets\SearchImage.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
