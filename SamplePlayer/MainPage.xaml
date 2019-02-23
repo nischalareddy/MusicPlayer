@@ -10,33 +10,24 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="200"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-
-        <Grid Grid.Column="0" Height="200" VerticalAlignment="Top">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Border Background="LightGray" Grid.Column="0"/>
-            <HyperlinkButton Content="Songs" Grid.Row="0" Click="Songs_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" />
-            <HyperlinkButton Content="Albums" Grid.Row="1" Click="Albums_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" />
-            <HyperlinkButton Content="Artists" Grid.Row="2" Click="Artists_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent"  />
-            <HyperlinkButton Content="PlayList" Grid.Row="3" Click="PlayList_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Name ="bPlayList"   />
-        </Grid>
-
+        <StackPanel Grid.Column="0"  Background="LightGray">
+            <HyperlinkButton Height="50" Content="Songs" Click="Songs_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" />
+            <HyperlinkButton Height="50" Content="Albums" Click="Albums_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" />
+            <HyperlinkButton Height="50" Content="Artists" Click="Artists_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent"  />
+            <HyperlinkButton Height="50" Content="PlayList" Click="PlayList_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Name ="bPlayList"   />
+        </StackPanel>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
+                <!-- Songs list begin -->
                 <ListView ItemsSource="{Binding}" x:Name="lvSongsList" BorderThickness="2" ItemClick="LvSongsList_ItemClick" IsItemClickEnabled="True" >
                     <ListView.HeaderTemplate>
-
                         <DataTemplate>
                             <Grid Padding="12" Background="{ThemeResource SystemBaseLowColor}">
                                 <Grid.ColumnDefinitions>
@@ -50,10 +41,9 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
-
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Song">
-                            <Grid Height="38">
+                            <Grid Height="48">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48"/>
                                     <ColumnDefinition Width="360"/>
@@ -61,11 +51,11 @@
                                     <ColumnDefinition Width="360"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Ellipse Height="32" Width="32" VerticalAlignment="Center">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="Assets/512.png"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
+                                <Rectangle  Height="32" Width="32" VerticalAlignment="Center" Margin="5,0,10,0">
+                                    <Rectangle.Fill>
+                                        <ImageBrush ImageSource="Assets/Song.png"   />
+                                    </Rectangle.Fill>
+                                </Rectangle>
                                 <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind SongName}" />
                                 <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Artist}"/>
                                 <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Album}"/>
@@ -87,17 +77,16 @@
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <Grid Height="38">
+                            <Grid Height="48">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <Ellipse Height="32" Width="32" VerticalAlignment="Center">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="Assets/512.png"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
+                                <Rectangle  Height="32" Width="32" VerticalAlignment="Center" Margin="5,0,10,0">
+                                    <Rectangle.Fill>
+                                        <ImageBrush ImageSource="Assets/Album.png"   />
+                                    </Rectangle.Fill>
+                                </Rectangle>
                                 <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{x:Bind}"/>
                             </Grid>
                         </DataTemplate>
@@ -117,17 +106,16 @@
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <Grid Height="38">
+                            <Grid Height="48">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-
-                                <Ellipse Height="32" Width="32" VerticalAlignment="Center">
-                                    <Ellipse.Fill>
-                                        <ImageBrush ImageSource="Assets/512.png"/>
-                                    </Ellipse.Fill>
-                                </Ellipse>
+                                <Rectangle  Height="32" Width="32" VerticalAlignment="Center" Margin="5,0,10,0">
+                                    <Rectangle.Fill>
+                                        <ImageBrush ImageSource="Assets/Artist.png"   />
+                                    </Rectangle.Fill>
+                                </Rectangle>
                                 <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{x:Bind}"/>
                             </Grid>
                         </DataTemplate>
