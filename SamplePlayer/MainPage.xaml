@@ -52,7 +52,7 @@
                     </ListView.HeaderTemplate>
 
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="local:Songs">
+                        <DataTemplate x:DataType="local:Song">
                             <Grid Height="38">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="48"/>
@@ -69,7 +69,6 @@
                                 <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind SongName}" />
                                 <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Artist}"/>
                                 <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Album}"/>
-
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -77,7 +76,6 @@
                 <!-- Album list begin -->
                 <ListView x:Name="lvAlbumsList" BorderThickness="2" ItemClick="LvAlbumsList_ItemClick" IsItemClickEnabled="True" Visibility="Collapsed">
                     <ListView.HeaderTemplate>
-
                         <DataTemplate>
                             <Grid Padding="12" Background="{ThemeResource SystemBaseLowColor}">
                                 <Grid.ColumnDefinitions>
@@ -87,11 +85,11 @@
                             </Grid>
                         </DataTemplate>
                     </ListView.HeaderTemplate>
-
                     <ListView.ItemTemplate>
-                        <DataTemplate >
+                        <DataTemplate x:DataType="x:String">
                             <Grid Height="38">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
 
@@ -100,15 +98,44 @@
                                         <ImageBrush ImageSource="Assets/512.png"/>
                                     </Ellipse.Fill>
                                 </Ellipse>
-                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{x:Bind Album}"/>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{x:Bind}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!-- Artist list begin -->
+                <ListView x:Name="lvArtistsList" BorderThickness="2" ItemClick="LvArtistsList_ItemClick" IsItemClickEnabled="True" Visibility="Collapsed">
+                    <ListView.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid Padding="12" Background="{ThemeResource SystemBaseLowColor}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Artist" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.HeaderTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="x:String">
+                            <Grid Height="38">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
+                                <Ellipse Height="32" Width="32" VerticalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="Assets/512.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Text="{x:Bind}"/>
                             </Grid>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
             <StackPanel Grid.Row="1">
-                <MediaPlayerElement Grid.Row="4" Grid.Column="1" AreTransportControlsEnabled="True" Name ="meMyPlayer">
+                <MediaPlayerElement Grid.Row="4" Grid.Column="1" AreTransportControlsEnabled="True" Name="meMyPlayer">
                     <MediaPlayerElement.TransportControls>
                         <MediaTransportControls IsStopButtonVisible="True" IsStopEnabled="True" IsPlaybackRateButtonVisible="True" IsPlaybackRateEnabled="True" IsFastForwardButtonVisible="True" IsFastForwardEnabled="True" IsFastRewindButtonVisible="True" IsFastRewindEnabled="True" HorizontalAlignment="Stretch"/>
                     </MediaPlayerElement.TransportControls>
