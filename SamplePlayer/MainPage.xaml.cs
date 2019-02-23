@@ -30,10 +30,9 @@ namespace SamplePlayer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private List<Songs> MusicList = new List<Songs>();
+        List<Songs> MusicList = new List<Songs>();
         MediaPlaybackList mplSongsList = new MediaPlaybackList();
-
-
+        Dictionary<String, List<Songs>> Albums = new Dictionary<String, List<Songs>>();
 
         public MainPage()
         {
@@ -43,14 +42,6 @@ namespace SamplePlayer
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-                //    await GetMusicFilesAsync();
-                //    base.OnNavigatedTo(e);
-                //    //first call GetMusicFilesAsync in Mainpage
-                //    //then call OnNavigateTo in the base class (Page)
-                //}
-
-                //public async Task GetMusicFilesAsync()
-                //{
 
             //https://stackoverflow.com/questions/53934858/c-sharp-uwp-system-unauthorizedaccessexception-access-is-denied
 
@@ -66,20 +57,31 @@ namespace SamplePlayer
                 var album = musicProperties.Album;
                 if (album == "")
                     album = "Unknown";
-                MusicList.Add((new Songs { FileName = file.DisplayName, Artist = artist, Album = album }));
 
-                lvPlayList.ItemsSource = MusicList;
+                if (Albums.ContainsKey(album))       //Creating Albums Dictionary
+                {
+                    Albums[album].Add(new Songs { SongName = file.DisplayName, Artist = artist, Album = album });
+                }
+                else
+                {
+                    Albums.Add(album, new List<Songs>());
+                    Albums[album].Add(new Songs { SongName = file.DisplayName, Artist = artist, Album = album });
+                }
 
 
-
+                MusicList.Add((new Songs { SongName = file.DisplayName, Artist = artist, Album = album }));
                 MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
                 mplSongsList.Items.Add(Item);
-                meMyPlayer.Source = mplSongsList;
             }
+
+            lvSongsList.ItemsSource = MusicList;
+            lvAlbumsList.ItemsSource = MusicList;
+
+            meMyPlayer.Source = mplSongsList;
         }
 
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private async void PlayList_Click(object sender, RoutedEventArgs e)
         {
             FileOpenPicker picker = new FileOpenPicker();                   // FileOpenPicker helps to select the songs from fileExplorer
 
@@ -93,15 +95,15 @@ namespace SamplePlayer
             //To get Windows.Media.Playlists
             //https://blogs.windows.com/buildingapps/2015/09/15/dynamically-detecting-features-with-api-contracts-10-by-10/
 
-        List<Songs> PlayList = new List<Songs>();
+            List<Songs> PlayList = new List<Songs>();
 
-        MediaPlaybackList mplPlayList = new MediaPlaybackList();
+            MediaPlaybackList mplPlayList = new MediaPlaybackList();
 
             foreach (StorageFile file in files)
             {
                 MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
                 mplPlayList.Items.Add(Item);                                        //adding each song/Item to MediaPlayback List(Items)
-                                                                            //mpl.Items returns a list to which we are adding the MediaPlaybackItem
+                                                                                    //mplPlayList.Items returns a list to which we will be adding the MediaPlaybackItem
 
                 var musicProperties = await file.Properties.GetMusicPropertiesAsync();
                 var artist = musicProperties.Artist;
@@ -110,31 +112,25 @@ namespace SamplePlayer
                 var album = musicProperties.Album;
                 if (album == "")
                     album = "Unknown";
-                PlayList.Add((new Songs { FileName = file.DisplayName, Artist = artist, Album = album }));
+                PlayList.Add((new Songs { SongName = file.DisplayName, Artist = artist, Album = album }));
 
             }
 
             //mpl.StartingItem = mpl.Items[2];
             meMyPlayer.Source = mplPlayList;                                        // meMyPlayer.Source is a superclass(IMediaPlaybackSource) property 
-                                                                            // which is holding a subclass(MediaPlaybackList Item) object mpl
+                                                                                    // which is holding a subclass(MediaPlaybackList Item) object mpl
 
-            lvPlayList.ItemsSource = PlayList;                             // displays the songs on the ListView
+            lvSongsList.ItemsSource = PlayList;                             // displays the songs on the ListView
             meMyPlayer.MediaPlayer.Play();
 
         }
 
-        private void LvPlayList_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            MediaPlaybackList mpl2 = (MediaPlaybackList)meMyPlayer.Source; //Assigning superclass object to a subclass refernce mpl2, here we can cast meMyPlayer.souce to a subclass(MediaPlaybackList) since 
-                                                                           // we know that the superclass refernce previous held the same subclass object
-
-            if (lvPlayList.SelectedIndex >= 0)
-                mpl2.MoveTo((uint)lvPlayList.SelectedIndex);
-        }
-
-
         private void Albums_Click(object sender, RoutedEventArgs e)
         {
+            lvSongsList.Visibility = Visibility.Collapsed;
+            lvAlbumsList.Visibility = Visibility.Visible;
+
+            //if (lv)
 
         }
 
@@ -147,7 +143,21 @@ namespace SamplePlayer
         {
             meMyPlayer.Source = mplSongsList;
 
-            lvPlayList.ItemsSource = MusicList;
+            lvSongsList.ItemsSource = MusicList;
+        }
+
+        private void LvAlbumsList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+        }
+
+        private void LvSongsList_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MediaPlaybackList mpl2 = (MediaPlaybackList)meMyPlayer.Source; //Assigning superclass object to a subclass refernce mpl2, here we can cast meMyPlayer.souce to a subclass(MediaPlaybackList) since 
+                                                                           // we know that the superclass refernce previous held the same subclass object
+
+            if (lvSongsList.SelectedIndex >= 0)
+                mpl2.MoveTo((uint)lvSongsList.SelectedIndex);
         }
     }
 

@@ -132,6 +132,7 @@
     <None Include="SamplePlayer_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\512.png" />
     <Content Include="Assets\BackGround.jpg" />
     <Content Include="Assets\PlayListIcon.png" />
     <Content Include="Assets\PlaySong.png" />

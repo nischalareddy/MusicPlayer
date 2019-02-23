@@ -9,76 +9,112 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="200" />
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="60" />
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Grid Grid.Column="0" Height="200" VerticalAlignment="Top">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Background="LightGray" Grid.Column="0"/>
+            <HyperlinkButton Content="Songs" Grid.Row="0" Click="Songs_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" />
+            <HyperlinkButton Content="Albums" Grid.Row="1" Click="Albums_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" />
+            <HyperlinkButton Content="Artists" Grid.Row="2" Click="Artists_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent"  />
+            <HyperlinkButton Content="PlayList" Grid.Row="3" Click="PlayList_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Name ="bPlayList"   />
+        </Grid>
 
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="100"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="0">
+                <ListView ItemsSource="{Binding}" x:Name="lvSongsList" BorderThickness="2" ItemClick="LvSongsList_ItemClick" IsItemClickEnabled="True">
+                    <ListView.HeaderTemplate>
 
-        <Border Background="LightGray" Grid.Column="0" Grid.RowSpan="5"/>
+                        <DataTemplate>
+                            <Grid Padding="12" Background="{ThemeResource SystemBaseLowColor}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="408"/>
+                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="360"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="Song" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                <TextBlock Grid.Column="1" Text="Artist" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                                <TextBlock Grid.Column="2" Text="Album" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.HeaderTemplate>
 
-        <HyperlinkButton Content="Albums" Click="Albums_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" Height="31" VerticalAlignment="Center" Width="47"/>
-        <HyperlinkButton Content="Artists" Grid.Row="1" Click="Artists_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" Height="31" VerticalAlignment="Center" Width="39"/>
-        <HyperlinkButton Content="Songs" Grid.Row="2" Click="Songs_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Left" Height="31" VerticalAlignment="Bottom" Width="38" Margin="0,0,0,0"/>
-        <HyperlinkButton Content="PlayList" Grid.Row="3" Click="Button_Click" Foreground="Black" Background="Transparent" BorderBrush="Transparent" Name ="bPlayList" HorizontalAlignment="Left" Height="31" VerticalAlignment="Center" Width="46"  />
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="local:Songs">
+                            <Grid Height="38">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="360"/>
+                                    <ColumnDefinition Width="360"/>
+                                </Grid.ColumnDefinitions>
 
-        
-        <ListView ItemsSource="{Binding}" x:Name="lvPlayList" Grid.Column="1" Grid.RowSpan="4" BorderThickness="2" ItemClick="LvPlayList_ItemClick" IsItemClickEnabled="True">
-            <ListView.HeaderTemplate>
+                                <Ellipse Height="32" Width="32" VerticalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="Assets/512.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind SongName}" />
+                                <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Artist}"/>
+                                <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Album}"/>
 
-                <DataTemplate>
-                    <Grid Padding="12" Background="{ThemeResource SystemBaseLowColor}">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="408"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="Song" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="1" Text="Artist" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                        <TextBlock Grid.Column="2" Text="Album" Style="{ThemeResource CaptionTextBlockStyle}"/>
-                    </Grid>
-                </DataTemplate>
-            </ListView.HeaderTemplate>
-            
-            <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="local:Songs">
-                    <Grid Height="48">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="48"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                            <ColumnDefinition Width="360"/>
-                        </Grid.ColumnDefinitions>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <!-- Album list begin -->
+                <ListView x:Name="lvAlbumsList" BorderThickness="2" ItemClick="LvAlbumsList_ItemClick" IsItemClickEnabled="True" Visibility="Collapsed">
+                    <ListView.HeaderTemplate>
 
-                        <Ellipse Height="32" Width="32" VerticalAlignment="Center">
-                            <Ellipse.Fill>
-                                <ImageBrush ImageSource="Assets/PlaySong.png"/>
-                            </Ellipse.Fill>
-                        </Ellipse>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" Style="{ThemeResource BaseTextBlockStyle}" Text="{x:Bind FileName}" />
-                        <TextBlock Grid.Column="2" VerticalAlignment="Center" Text="{x:Bind Artist}"/>
-                        <TextBlock Grid.Column="3" VerticalAlignment="Center" Text="{x:Bind Album}"/>
-                       
-                    </Grid>
-                </DataTemplate>
-                </ListView.ItemTemplate>
-        </ListView>
+                        <DataTemplate>
+                            <Grid Padding="12" Background="{ThemeResource SystemBaseLowColor}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Album" Style="{ThemeResource CaptionTextBlockStyle}"/>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.HeaderTemplate>
 
-        <MediaPlayerElement Grid.Row="4" Grid.Column="1" AreTransportControlsEnabled="True" Name ="meMyPlayer">
-            <MediaPlayerElement.TransportControls>
-                <MediaTransportControls IsStopButtonVisible="True" IsStopEnabled="True" IsPlaybackRateButtonVisible="True" IsPlaybackRateEnabled="True" IsFastForwardButtonVisible="True" IsFastForwardEnabled="True" IsFastRewindButtonVisible="True" IsFastRewindEnabled="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-            </MediaPlayerElement.TransportControls>
-        </MediaPlayerElement>
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <Grid Height="38">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
+                                <Ellipse Height="32" Width="32" VerticalAlignment="Center">
+                                    <Ellipse.Fill>
+                                        <ImageBrush ImageSource="Assets/512.png"/>
+                                    </Ellipse.Fill>
+                                </Ellipse>
+                                <TextBlock Grid.Column="0" VerticalAlignment="Center" Text="{x:Bind Album}"/>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+            <StackPanel Grid.Row="1">
+                <MediaPlayerElement Grid.Row="4" Grid.Column="1" AreTransportControlsEnabled="True" Name ="meMyPlayer">
+                    <MediaPlayerElement.TransportControls>
+                        <MediaTransportControls IsStopButtonVisible="True" IsStopEnabled="True" IsPlaybackRateButtonVisible="True" IsPlaybackRateEnabled="True" IsFastForwardButtonVisible="True" IsFastForwardEnabled="True" IsFastRewindButtonVisible="True" IsFastRewindEnabled="True" HorizontalAlignment="Stretch"/>
+                    </MediaPlayerElement.TransportControls>
+                </MediaPlayerElement>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
 
