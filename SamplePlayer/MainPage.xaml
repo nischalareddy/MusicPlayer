@@ -34,7 +34,7 @@
                 <RowDefinition Height="100"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0">
-                <ListView ItemsSource="{Binding}" x:Name="lvSongsList" BorderThickness="2" ItemClick="LvSongsList_ItemClick" IsItemClickEnabled="True">
+                <ListView ItemsSource="{Binding}" x:Name="lvSongsList" BorderThickness="2" ItemClick="LvSongsList_ItemClick" IsItemClickEnabled="True" >
                     <ListView.HeaderTemplate>
 
                         <DataTemplate>

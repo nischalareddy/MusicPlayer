@@ -33,7 +33,7 @@ namespace SamplePlayer
         List<Song> SongList = new List<Song>();
         List<string> AlbumList = new List<string>();
         List<string> ArtistList = new List<string>();
-        MediaPlaybackList mplSongsList = new MediaPlaybackList();
+        MediaPlaybackList mplPlaybackList = new MediaPlaybackList();
         //Dictionary<String, List<Song>> Albums = new Dictionary<String, List<Song>>();
 
         public MainPage()
@@ -70,9 +70,9 @@ namespace SamplePlayer
                 if (album == "")
                     album = "Unknown";
 
-                SongList.Add((new Song { SongName = file.DisplayName, Artist = artist, Album = album }));
+                SongList.Add((new Song { SongName = file.DisplayName, Artist = artist, Album = album, Path = file.Path }));
                 MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
-                mplSongsList.Items.Add(Item);
+                mplPlaybackList.Items.Add(Item);
             }
 
             PopulateAlbumAndArtistLists();
@@ -81,7 +81,7 @@ namespace SamplePlayer
             lvAlbumsList.ItemsSource = AlbumList;
             lvArtistsList.ItemsSource = ArtistList;
 
-            meMyPlayer.Source = mplSongsList;
+            meMyPlayer.Source = mplPlaybackList;
         }
 
         private void PopulateAlbumAndArtistLists()
@@ -157,16 +157,36 @@ namespace SamplePlayer
 
         private void Songs_Click(object sender, RoutedEventArgs e)
         {
-            meMyPlayer.Source = mplSongsList;
+            meMyPlayer.Source = mplPlaybackList;
             lvSongsList.ItemsSource = SongList;
 
             HideAllListViews();
             lvSongsList.Visibility = Visibility.Visible;
         }
 
-        private void LvAlbumsList_ItemClick(object sender, ItemClickEventArgs e)
+        private async void LvAlbumsList_ItemClick(object sender, ItemClickEventArgs e)
         {
+            string album = (string)e.ClickedItem;
+            List<Song> songsByAlbum = new List<Song>();
+            MediaPlaybackList mplPlaybackListByAlbum = new MediaPlaybackList();
 
+            foreach (Song song in SongList)
+            {
+                if (song.Album == album)
+                {
+                    songsByAlbum.Add(song);
+                    StorageFile file = await StorageFile.GetFileFromPathAsync(song.Path);
+                    MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
+                    mplPlaybackListByAlbum.Items.Add(Item);
+
+                }
+            }
+
+            HideAllListViews();
+            lvSongsList.Visibility = Visibility.Visible;
+            lvSongsList.ItemsSource = songsByAlbum;
+            meMyPlayer.Source = mplPlaybackListByAlbum;
+            //meMyPlayer.MediaPlayer.Play();
         }
 
         private void LvSongsList_ItemClick(object sender, ItemClickEventArgs e)
@@ -175,12 +195,35 @@ namespace SamplePlayer
                                                                            // we know that the superclass refernce previous held the same subclass object
 
             if (lvSongsList.SelectedIndex >= 0)
+            {
                 mpl2.MoveTo((uint)lvSongsList.SelectedIndex);
+                meMyPlayer.MediaPlayer.Play();
+            }
         }
 
-        private void LvArtistsList_ItemClick(object sender, ItemClickEventArgs e)
+        private async void LvArtistsList_ItemClick(object sender, ItemClickEventArgs e)
         {
+            string artist = (string)e.ClickedItem;
+            List<Song> songsByArtist = new List<Song>();
+            MediaPlaybackList mplPlaybackListByArtist = new MediaPlaybackList();
 
+            foreach (Song song in SongList)
+            {
+                if (song.Artist == artist)
+                {
+                    songsByArtist.Add(song);
+                    StorageFile file = await StorageFile.GetFileFromPathAsync(song.Path);
+                    MediaPlaybackItem Item = new MediaPlaybackItem(MediaSource.CreateFromStorageFile(file));
+                    mplPlaybackListByArtist.Items.Add(Item);
+
+                }
+            }
+
+            HideAllListViews();
+            lvSongsList.Visibility = Visibility.Visible;
+            lvSongsList.ItemsSource = songsByArtist;
+            meMyPlayer.Source = mplPlaybackListByArtist;
+            //meMyPlayer.MediaPlayer.Play();
         }
     }
 
