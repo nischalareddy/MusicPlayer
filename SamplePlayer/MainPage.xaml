@@ -43,15 +43,15 @@
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="local:Song">
-                            <Grid Height="48">
+                            <Grid Height="58">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="48"/>
+                                    <ColumnDefinition Width="68"/>
                                     <ColumnDefinition Width="360"/>
                                     <ColumnDefinition Width="360"/>
                                     <ColumnDefinition Width="360"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Rectangle  Height="32" Width="32" VerticalAlignment="Center" Margin="5,0,10,0">
+                                <Rectangle  Height="48" Width="48" VerticalAlignment="Center" Margin="5,0,10,0">
                                     <Rectangle.Fill>
                                         <ImageBrush ImageSource="Assets/Song.png"   />
                                     </Rectangle.Fill>
@@ -77,12 +77,12 @@
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <Grid Height="48">
+                            <Grid Height="58">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Rectangle  Height="32" Width="32" VerticalAlignment="Center" Margin="5,0,10,0">
+                                <Rectangle  Height="48" Width="48" VerticalAlignment="Center" Margin="5,0,10,0">
                                     <Rectangle.Fill>
                                         <ImageBrush ImageSource="Assets/Album.png"   />
                                     </Rectangle.Fill>
@@ -106,12 +106,12 @@
                     </ListView.HeaderTemplate>
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="x:String">
-                            <Grid Height="48">
+                            <Grid Height="58">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Rectangle  Height="32" Width="32" VerticalAlignment="Center" Margin="5,0,10,0">
+                                <Rectangle  Height="48" Width="48" VerticalAlignment="Center" Margin="5,0,10,0">
                                     <Rectangle.Fill>
                                         <ImageBrush ImageSource="Assets/Artist.png"   />
                                     </Rectangle.Fill>
